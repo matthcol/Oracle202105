@@ -49,6 +49,7 @@ select * from dba_directories where directory_name like 'DATA_P%';
 expdp -help
 impdp -help
 expdp system/password FULL=YES DUMPFILE=dp_full.dump LOGFILE=dp_full.log
+
 expdp system/password PARFILE=dp_movie.par
 
 -- reprendre la main sur job existant
@@ -65,4 +66,28 @@ select * from dba_datapump_jobs;
 drop table SYSTEM."EXP_TABLE_MOVIES-10_47_16";
 select * from dba_tables where TABLE_NAME like '%MOVIE%';
 
+-- IMPORT JOBS
+
+drop user movie cascade;
+select * from dba_users where username like 'MOV%';
+impdp system/password PARFILE=imp_movie.par
+
+-- after drop table play :
+impdp system/password TABLES=movie.play DUMPFILE=dp_movie.dump LOGFILE=imp_table_play.log
+-- again overwriting table play
+impdp system/password TABLES=movie.play DUMPFILE=dp_movie.dump LOGFILE=imp_table_play.log TABLE_EXISTS_ACTION=REPLACE
+
+drop user movietmp;
+create user movietmp identified by password quota unlimited on users;
+grant connect, resource to movietmp;
+
+impdp system/password DUMPFILE=dp_movie.dump LOGFILE=imp_table_play.log  \
+    SCHEMAS=movie INCLUDE=table:\"=\'STARS\'\" REMAP_SCHEMA=movie:movietmp    
+
+select * from movietmp.stars where name = 'Bruce Willis';
+select count(*) from movietmp.movies;
+alter session set nls_date_format='YYYY-MM-DD';
+update movie.stars set birthdate = '1955-03-19' where name='Bruce Willis'; 
+commit;
+drop user movietmp cascade;
 
