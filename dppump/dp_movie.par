@@ -1,0 +1,6 @@
+DUMPFILE=dp_movie.dump
+LOGFILE=dp_movie.log
+STATUS=20
+JOB_NAME=job_dp_movie
+SCHEMAS=movie
+REUSE_DUMPFILES=YES
