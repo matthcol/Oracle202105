@@ -1,0 +1,12 @@
+CONFIGURE RETENTION POLICY TO REDUNDANCY 1;
+configure channel device type disk format '/backup/ORALIN19/database-%T-%u.bckp';
+CONFIGURE CONTROLFILE AUTOBACKUP ON;
+CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK
+    TO '/backup/ORALIN19/controlspfile-%T-%F.bck';
+run {
+    backup database;
+    backup archivelog all
+        FORMAT '/backup/ORALIN19/archivelog-%T-%u.bck'
+        delete all input;
+    delete obsolete;
+}
