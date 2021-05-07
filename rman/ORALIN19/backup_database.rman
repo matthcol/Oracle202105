@@ -8,5 +8,5 @@ run {
     backup archivelog all
         FORMAT '/backup/ORALIN19/archivelog-%T-%u.bck'
         delete all input;
-    delete obsolete;
+    delete noprompt obsolete;
 }
