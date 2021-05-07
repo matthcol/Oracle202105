@@ -91,3 +91,22 @@ update movie.stars set birthdate = '1955-03-19' where name='Bruce Willis';
 commit;
 drop user movietmp cascade;
 
+-- intro rman : connection cible db à sauvegarder/restaurer
+rman
+    connect target /
+rman target /
+rman target sys/password
+-- list : consulter le référentiel rman
+list backup;
+list backup of database;
+list backup of archivelog all;
+list backup of spfile;
+list backup of controlfile;
+list archivelog all;
+list backup summary;
+-- backup
+backup database; -- backup complet database
+backup database plus archivelog;  -- database plus archivelog (ne purge pas le dossier des archivelogs)
+backup database plus archivelog delete all input; -- idem et purge dossier archivelog
+backup archivelog all delete all input; -- archivelogs uniquement, avec purge
+
