@@ -1,0 +1,6 @@
+export PATH=$PATH:/app/oracle/product/19.3/bin
+export ORACLE_HOME=/app/oracle/product/19.3
+export ORACLE_SID=oralin19
+export ORACLE_HOSTNAME=ora19.localdomain
+alias sqlplus='rlwrap sqlplus'
+alias rman='rlwrap rman'
