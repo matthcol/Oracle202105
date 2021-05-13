@@ -1,0 +1,6 @@
+CONFIGURE RETENTION POLICY TO REDUNDANCY 1;
+CONFIGURE CONTROLFILE AUTOBACKUP ON;
+run {
+	backup database plus archivelog delete all input;
+	delete noprompt obsolete;
+}

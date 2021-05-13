@@ -1,0 +1,101 @@
+
+Recovery Manager: Release 19.0.0.0.0 - Production on Fri May 7 14:42:59 2021
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
+
+connected to target database: ORALIN19 (DBID=3699418345)
+
+RMAN> CONFIGURE RETENTION POLICY TO REDUNDANCY 1;
+2> configure channel device type disk format '/backup/ORALIN19/database-%T-%u.bckp';
+3> CONFIGURE CONTROLFILE AUTOBACKUP ON; 
+4> CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK 
+5>     TO '/backup/ORALIN19/controlspfile-%T-%F.bck';
+6> run {  
+7>     backup database;
+8>     backup archivelog all 
+9>         FORMAT '/backup/ORALIN19/archivelog-%T-%u.bck'
+10>         delete all input;
+11>     delete noprompt obsolete;
+12> }
+13> 
+using target database control file instead of recovery catalog
+old RMAN configuration parameters:
+CONFIGURE RETENTION POLICY TO REDUNDANCY 1;
+new RMAN configuration parameters:
+CONFIGURE RETENTION POLICY TO REDUNDANCY 1;
+new RMAN configuration parameters are successfully stored
+
+old RMAN configuration parameters:
+CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT   '/backup/ORALIN19/database-%T-%u.bckp';
+new RMAN configuration parameters:
+CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT   '/backup/ORALIN19/database-%T-%u.bckp';
+new RMAN configuration parameters are successfully stored
+
+old RMAN configuration parameters:
+CONFIGURE CONTROLFILE AUTOBACKUP ON;
+new RMAN configuration parameters:
+CONFIGURE CONTROLFILE AUTOBACKUP ON;
+new RMAN configuration parameters are successfully stored
+
+old RMAN configuration parameters:
+CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '/backup/ORALIN19/controlspfile-%T-%F.bck';
+new RMAN configuration parameters:
+CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '/backup/ORALIN19/controlspfile-%T-%F.bck';
+new RMAN configuration parameters are successfully stored
+
+Starting backup at 07-MAY-21
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=263 device type=DISK
+channel ORA_DISK_1: starting full datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00001 name=/app/oracle/oradata/ORALIN19/system01.dbf
+input datafile file number=00003 name=/app/oracle/oradata/ORALIN19/sysaux01.dbf
+input datafile file number=00004 name=/app/oracle/oradata/ORALIN19/undotbs01.dbf
+input datafile file number=00007 name=/app/oracle/oradata/ORALIN19/users01.dbf
+channel ORA_DISK_1: starting piece 1 at 07-MAY-21
+channel ORA_DISK_1: finished piece 1 at 07-MAY-21
+piece handle=/backup/ORALIN19/database-20210507-0gvu8nvm.bckp tag=TAG20210507T144302 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:00:15
+Finished backup at 07-MAY-21
+
+Starting backup at 07-MAY-21
+current log archived
+using channel ORA_DISK_1
+channel ORA_DISK_1: starting archived log backup set
+channel ORA_DISK_1: specifying archived log(s) in backup set
+input archived log thread=1 sequence=13 RECID=6 STAMP=1071931397
+channel ORA_DISK_1: starting piece 1 at 07-MAY-21
+channel ORA_DISK_1: finished piece 1 at 07-MAY-21
+piece handle=/backup/ORALIN19/archivelog-20210507-0hvu8o05.bck tag=TAG20210507T144317 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:00:01
+channel ORA_DISK_1: deleting archived log(s)
+archived log file name=/archivelog/1_13_1055749292.dbf RECID=6 STAMP=1071931397
+Finished backup at 07-MAY-21
+
+Starting Control File and SPFILE Autobackup at 07-MAY-21
+piece handle=/backup/ORALIN19/controlspfile-20210507-c-3699418345-20210507-07.bck comment=NONE
+Finished Control File and SPFILE Autobackup at 07-MAY-21
+
+RMAN retention policy will be applied to the command
+RMAN retention policy is set to redundancy 1
+using channel ORA_DISK_1
+Deleting the following obsolete backups and copies:
+Type                 Key    Completion Time    Filename/Handle
+-------------------- ------ ------------------ --------------------
+Backup Set           13     07-MAY-21         
+  Backup Piece       13     07-MAY-21          /backup/ORALIN19/database-20210507-0dvu8nhj.bckp
+Backup Set           14     07-MAY-21         
+  Backup Piece       14     07-MAY-21          /backup/ORALIN19/archivelog-20210507-0evu8ni2.bck
+Backup Set           15     07-MAY-21         
+  Backup Piece       15     07-MAY-21          /backup/ORALIN19/controlspfile-20210507-c-3699418345-20210507-06.bck
+deleted backup piece
+backup piece handle=/backup/ORALIN19/database-20210507-0dvu8nhj.bckp RECID=13 STAMP=1071930931
+deleted backup piece
+backup piece handle=/backup/ORALIN19/archivelog-20210507-0evu8ni2.bck RECID=14 STAMP=1071930946
+deleted backup piece
+backup piece handle=/backup/ORALIN19/controlspfile-20210507-c-3699418345-20210507-06.bck RECID=15 STAMP=1071930947
+Deleted 3 objects
+
+
+Recovery Manager complete.

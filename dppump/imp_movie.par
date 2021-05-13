@@ -1,0 +1,5 @@
+DUMPFILE=dp_movie.dump
+LOGFILE=imp_movie.log
+STATUS=20
+JOB_NAME=job_imp_movie
+SCHEMAS=movie
